@@ -23,7 +23,7 @@ const jobSchema = new mongoose.Schema({
   jobMode: {
     type: String,
     required: true,
-    enum: ["Remote", "office"],
+    enum: ["remote", "office","hybrid"],
   },
   jobLocation: {
     type: String,
@@ -38,7 +38,7 @@ const jobSchema = new mongoose.Schema({
     required: true,
   },
   skills: {
-    type: String,
+    type: [String],
     required: true,
   },
   addInfo: {

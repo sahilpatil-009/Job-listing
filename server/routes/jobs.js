@@ -13,6 +13,20 @@ router.get("/", async (req, res) => {
   if(companyName){
     query.companyName = { $regex : companyName, $options: "i" };
   }
+  if(jobType){
+    query.jobType = jobType
+  }
+  if(jobMode){
+    query.jobMode = jobMode
+  }
+  if(jobLocation){
+    query.jobLocation = jobLocation
+  }
+  if (skills) {
+    const skillsArray = Array.isArray(skills) ? skills : [skills];
+    query.skills = { $all: skillsArray };
+  }
+
   const jobs = await Job.find(query).skip(offset || 0).limit(limit || 10);
   res.status(200).json(jobs);
 });
@@ -69,6 +83,10 @@ router.post("/", authMiddleware, async (req, res) => {
     !skills
   ) {
     res.status(400).json({ success: false, message: "All fields Required" });
+  }
+
+  if (!Array.isArray(skills) || skills.length === 0) {
+    return res.status(400).json({ success: false, message: "Skills must be a non-empty array" });
   }
 
   try {
