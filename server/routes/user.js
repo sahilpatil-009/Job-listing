@@ -63,12 +63,12 @@ router.post("/login", async (req, res) => {
       .json({ success: false, message: "Wrong Username or Password" });
   }
 
-  const payload = { id: exist._id };
+  const payload = { id: exist._id };  
   const token = jwt.sign(payload, process.env.SECRET_KEY);
   res.status(200).json({
     success: true,
     message: "Login SUccesfully",
-    token: token,
+    token,
   });
 });
 
